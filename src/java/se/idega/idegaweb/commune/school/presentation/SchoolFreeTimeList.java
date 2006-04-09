@@ -87,7 +87,7 @@ public class SchoolFreeTimeList extends SchoolAccountingCommuneBlock {
 		table.mergeCells(1,row,4,row);	
 
 		
-		table.add(getNavigationTable(false, multipleSchools, showBunRadioButtons), 1, row++);
+		table.add(getNavigationTable(false, this.multipleSchools, this.showBunRadioButtons), 1, row++);
 		
 		table.setAlignment(1, row, Table.HORIZONTAL_ALIGN_RIGHT);
 		table.mergeCells(1,row,4,row);		
@@ -120,18 +120,22 @@ public class SchoolFreeTimeList extends SchoolAccountingCommuneBlock {
 				address = (Address)addresses.get(id);
 				phone = (Phone)phones.get(id);
 
-				if (row % 2 == 0)
+				if (row % 2 == 0) {
 					table.setRowColor(row, getZebraColor1());
-				else
+				}
+				else {
 					table.setRowColor(row, getZebraColor2());
+				}
 
 				Name name = new Name(pupil.getFirstName(), pupil.getMiddleName(), pupil.getLastName());
 				table.add(getSmallText(name.getName(iwc.getApplicationSettings().getDefaultLocale(), true)),1,row);
 				table.add(getSmallText(PersonalIDFormatter.format(pupil.getPersonalID(),iwc.getCurrentLocale())),2,row);
-				if (address != null)
+				if (address != null) {
 					table.add(getSmallText(address.getStreetAddress()),3,row);
-				if (phone != null)
+				}
+				if (phone != null) {
 					table.add(getSmallText(phone.getNumber()),4,row);
+				}
 					
 				row++;
 			}
@@ -147,13 +151,13 @@ public class SchoolFreeTimeList extends SchoolAccountingCommuneBlock {
 	 * Turns on/of view of drop down showing providers
 	 */
 	public void setMultipleSchools(boolean multiple) {
-		multipleSchools = multiple;
+		this.multipleSchools = multiple;
 	}	
 	/**
 	 * Turns on/off view of radiobuttons for showing BUN administrated shools or not
 	 * @param show
 	 */
 	public void setShowBunRadioButtons(boolean show){
-		showBunRadioButtons = show;		
+		this.showBunRadioButtons = show;		
 	}	
 }

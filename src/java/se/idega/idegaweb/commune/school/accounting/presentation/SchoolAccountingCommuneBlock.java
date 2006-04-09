@@ -1,5 +1,5 @@
 /*
- * $Id: SchoolAccountingCommuneBlock.java,v 1.3 2005/07/20 19:45:32 malin Exp $
+ * $Id: SchoolAccountingCommuneBlock.java,v 1.4 2006/04/09 11:56:13 laddi Exp $
  * Created on Oct 15, 2004
  *
  * Copyright (C) 2004 Idega Software hf. All Rights Reserved.
@@ -27,10 +27,10 @@ import com.idega.presentation.ui.RadioButton;
 
 /**
  * 
- *  Last modified: $Date: 2005/07/20 19:45:32 $ by $Author: malin $
+ *  Last modified: $Date: 2006/04/09 11:56:13 $ by $Author: laddi $
  * 
  * @author <a href="mailto:thomas@idega.com">thomas</a>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class SchoolAccountingCommuneBlock extends SchoolCommuneBlock {
 	
@@ -40,7 +40,7 @@ public abstract class SchoolAccountingCommuneBlock extends SchoolCommuneBlock {
 	private boolean _centralAdmin = false;
 	
 	protected void initialize(IWContext iwc) throws RemoteException {
-		_centralAdmin = iwc.getParameter(PARAM_BUNADM) != null && iwc.getParameter(PARAM_BUNADM).equals("true"); 
+		this._centralAdmin = iwc.getParameter(PARAM_BUNADM) != null && iwc.getParameter(PARAM_BUNADM).equals("true"); 
 		super.initialize(iwc);
 	}
 
@@ -86,7 +86,7 @@ public abstract class SchoolAccountingCommuneBlock extends SchoolCommuneBlock {
 				RadioButton rb1 = new RadioButton(PARAM_BUNADM, ""+true);
 				RadioButton rb2 = new RadioButton(PARAM_BUNADM, ""+false);		
 						
-				if (_centralAdmin){
+				if (this._centralAdmin){
 					rb1.setSelected();
 				} else{
 					rb2.setSelected();
@@ -113,7 +113,7 @@ public abstract class SchoolAccountingCommuneBlock extends SchoolCommuneBlock {
 			table.resize(9, row + 2);
 			table.add(getSmallHeader(localize("school.school_list","School")+":"+Text.NON_BREAKING_SPACE),1,row);
 			table.mergeCells(2, row, 8, row);
-			table.add(getSchools(_centralAdmin, category),2,row);
+			table.add(getSchools(this._centralAdmin, category),2,row);
 			++row;
 			table.setHeight(row, "2");
 			++row;
@@ -199,7 +199,7 @@ public abstract class SchoolAccountingCommuneBlock extends SchoolCommuneBlock {
 	*/
 	
 	protected DropdownMenu getStudyPathDropdown(Collection studyPaths, IWContext iwc) throws RemoteException{
-		DropdownMenu menu = (DropdownMenu) getStyledInterface(new DropdownMenu(session.getParameterStudyPathID()));
+		DropdownMenu menu = (DropdownMenu) getStyledInterface(new DropdownMenu(this.session.getParameterStudyPathID()));
 		
 		if (studyPaths != null) {
 			int studyPathID = 0;
@@ -210,8 +210,8 @@ public abstract class SchoolAccountingCommuneBlock extends SchoolCommuneBlock {
 					SchoolStudyPath sp = (SchoolStudyPath) iter.next();
 					menu.addMenuElement(sp.getPrimaryKey().toString(), sp.getCode() + " - " + sp.getDescription());
 				}
-				if (iwc.isParameterSet(session.getParameterStudyPathID())){
-					studyPathID = new Integer (iwc.getParameter(session.getParameterStudyPathID())).intValue();
+				if (iwc.isParameterSet(this.session.getParameterStudyPathID())){
+					studyPathID = new Integer (iwc.getParameter(this.session.getParameterStudyPathID())).intValue();
 					menu.setSelectedElement(studyPathID);
 				}
 			}
